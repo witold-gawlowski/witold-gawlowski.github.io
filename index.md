@@ -1,3 +1,8 @@
+---
+layout: default
+title: omg title
+---
+
 __Divine Comedy__
 
 *A 5 person team project. Inspired by Downwell but in 3D.*
