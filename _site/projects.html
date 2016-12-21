@@ -21,34 +21,38 @@
             <li><a href="/blog.html">Blog</a></li>
             <li><a href="/bio.html">Bio</a></li>
             <li><a href="/links.html">Links</a></li>
-		        <li><a href="{{ site.github.owner_url }}">Github Profile</a></li>
+		        <li><a href="http://github.com/witold-gawlowski">Github Profile</a></li>
         </ul>
 		</nav>
       </header>
       <section>
 
-      {{ content }}
+      
+<div class="catalog-item">
+   <a href="/projects/Volg.html">
+   Volg (2016)
+   <img src="/images/thumbs/volg.png" alt="Volg" />
+   </a>
+  </div>
+
+<div class="catalog-item">
+   <a href="/projects/Divine-Comedy.html">
+   Divine Comedy (2016)
+   <img src="/images/thumbs/divine-comedy.png" alt="Divine Comedy" />
+   </a>
+  </div>
+
+
 
       </section>
       <footer>
-        {% if site.github.is_project_page %}
-        <p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-        {% endif %}
+        
+        <p>This project is maintained by <a href="http://github.com/witold-gawlowski">witold-gawlowski</a></p>
+        
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
-  {% if site.google_analytics %}
-    <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-      try {
-        var pageTracker = _gat._getTracker("{{ site.google_analytics }}");
-      pageTracker._trackPageview();
-      } catch(err) {}
-    </script>
-  {% endif %}
+    <script src="/assets/js/scale.fix.js"></script>
+  
   </body>
 </html>

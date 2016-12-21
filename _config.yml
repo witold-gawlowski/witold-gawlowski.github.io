@@ -1,1 +1,6 @@
-theme: jekyll-theme-minimal
+safe: true
+lsi: false
+permalink: none
+name: Witold Gawlowski
+description: Homapage
+repository: witold-gawlowski/witold-gawlowski.github.io
