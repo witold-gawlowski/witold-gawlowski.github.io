@@ -2,7 +2,7 @@
 layout: default
 title: Projects
 ---
-<table>
+<table id="project-list">
 {% for post in site.posts %}
  {% if post.category == 'projects' %}
  <tr>
