@@ -1,0 +1,21 @@
+@import url(http://fonts.googleapis.com/css?family=Aref+Ruqaa);
+
+#header {
+  background-color: #66CCFF;
+}
+
+body {
+  color: red;
+  width: 600px;
+  font-family: 'Aref Ruqaa', sans-serif;
+}
+
+nav {
+  float: left;
+}
+
+
+
+footer {
+  clear: both;
+}
