@@ -1,23 +1,67 @@
 @charset "UTF-8";
 
-@import url(https://fonts.googleapis.com/css?family=Terminal+Dosis);
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+@import url(https://fonts.googleapis.com/css?family=Cutive+Mono);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
 
 #header {
   background-color: #66CCFF;
 }
 
 body {
-  color: red;
-  width: 600px;
-  font-family: 'Terminal Dosis', sans-serif;
+  font-family: 'Arial Black', sans-serif;
+  margin: 4em auto ;
+  max-width: 700px;
+  padding: 0px;
+  background-color: #f7ece3;
+  font-stretch: expanded;
 }
 
 nav {
   float: left;
+  padding: 0px;
+  text-align: left;
 }
 
+nav ul {
+  list-style-type: none;
+  padding: 0px;
+}
+td{ vertical-align: top}
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: white;
+}
 
+#content {
+  max-width: 500px;
+  float: left;
+  margin-left: 60px;
+}
 
-footer {
-  clear: both;
+#catalog-item {
+  clear: right;
+}
+#thumb {
+  float: left;
+}
+
+#profile-pic {
+  max-height: 150px;
+  margin-right: 20px;
+}
+#thumb{
+  max-height: 120px;
+  max-width: 150px;
+}
+#short-note {
+  min-width: 300px;
+  min-height: 300px;
+}
+
+img:hover{
+  box-shadow: 0 0 2px 1px rgba (0, 140, 186, 0.5);
 }
