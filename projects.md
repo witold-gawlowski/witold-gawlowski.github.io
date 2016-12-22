@@ -14,7 +14,9 @@ title: Projects
  <td>
  <a href="{{ post.url }}" id="short-note">
   {{ post.title }} ({{ post.date | date: "%m/%Y" }})
+  <br>
   </a>
+  <small>  {{post.note}}</small>
  </td>
  </tr>
  {% endif %}
