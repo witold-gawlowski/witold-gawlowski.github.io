@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Aref+Ruqaa);
+@import url(http://fonts.googleapis.com/css?family=Terminal+Dosis:200);
 
 #header {
   background-color: #66CCFF;
@@ -7,7 +7,7 @@
 body {
   color: red;
   width: 600px;
-  font-family: 'Aref Ruqaa', sans-serif;
+  font-family: 'Terminal Dosis', sans-serif;
 }
 
 nav {
