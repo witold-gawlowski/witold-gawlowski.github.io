@@ -3,7 +3,7 @@ layout: default
 title: Super Tamagochi Brothers
 category: projects
 ---
-<iframe width="490" height="275" src="http://www.youtube.com/embed/_keb2_dR5-Q?showinfo=0" frameborder="0"></iframe>
+<iframe width="490" height="275" src="https://www.youtube.com/embed/_keb2_dR5-Q?showinfo=0" frameborder="0"></iframe>
 
 Engine: Unity  
 Development time: 48 hours  
