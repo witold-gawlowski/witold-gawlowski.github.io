@@ -1,10 +1,10 @@
----
+﻿---
 layout: default
 title: Info
 ---
 
 
-<img style="float: left; margin-right: 15px;" src="/images/photo.jpg">
+<img style="float: left; margin-right: 15px; width: 150px; height: 150px;" src="/images/photo.jpg">
 
 My name is Witold Gawłowski.
 
