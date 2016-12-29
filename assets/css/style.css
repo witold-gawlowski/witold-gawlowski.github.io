@@ -58,15 +58,13 @@ img { max-width: 550px; }
 #catalog-item {
   clear: right;
 }
-#thumb {
-  float: left;
-}
 
 #profile-pic {
   max-height: 150px;
   margin-right: 20px;
 }
 #thumb{
+  float: left;
   max-height: 120px;
   max-width: 150px;
   margin-right: 20px;
