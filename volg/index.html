@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Volg!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="phaser/build/phaser.min.js"></script>  
+    <style>
+        body,
+        html{
+            margin:0;
+            padding:0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: black;
+            text-align: center;
+        }
+        canvas{
+            margin: 0 auto;
+            display: block;
+            position: relative;
+            border: 2px solid white;
+            opacity:0;
+        }
+        .intro{
+            position: absolute;
+            text-align: center;
+            display: block;
+            width: 100%;
+            z-index: 99999;
+            opacity: 0;
+        }
+        .play,
+        .loser{
+            position: absolute;
+            top: 75%;
+            left: 50%;
+            margin-left: -100px; 
+            width: 200px;
+            height: 60px;
+        }
+        .loser{
+            display: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<button id="view-fullscreen">full</button>
+<button id="cancel-fullscreen">window</button>
+<div class="intro">
+    <img src="img/intro.jpg" alt="">
+    <button class="play">PLAY</button>
+    <h1 class="loser">LOSER!</h1>
+</div>
+<script type="text/javascript">
+
+(function () {
+    var viewFullScreen = document.getElementById("view-fullscreen");
+    if (viewFullScreen) {
+        viewFullScreen.addEventListener("click", function () {
+            var docElm = document.documentElement;
+            docElm.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            }
+            else if (docElm.msRequestFullscreen) {
+                docElm.msRequestFullscreen();
+            }
+            else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            }
+            else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            }
+        }, false);
+    }
+
+    var cancelFullScreen = document.getElementById("cancel-fullscreen");
+    if (cancelFullScreen) {
+        cancelFullScreen.addEventListener("click", function () {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }, false);
+    }
+
+})();
+
+
+
+    window.onload = function() {
+
+        var game = new Phaser.Game(1024, 768, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
+
+        function preload () {
+
+            game.load.image('logo', 'ludek.jpg');
+
+            $('.intro').animate({
+                opacity: 1
+            }, 1000).promise().done(function(){
+                $('.play').on('click touchstart', function(){
+                    $('.intro').animate({
+                        opacity: 0
+                    }, 1000);
+                    $('canvas').animate({
+                        opacity: 1 
+                    }, 1000);
+                });
+            });
+
+        }
+
+        // function circle(t){
+        //     t = t/1000;
+        //     return[Math.sin(t)*gameWidth/2+screenWidth/2, Math.cos(t)*gameHeight/2+screenHeight/2];
+        // }
+
+        var sprites;
+        var sprite;
+        // var rect;
+        // var graphics;
+
+        function create () {
+
+            // var rects = game.add.group();
+            // rects.enableBody = true;
+            // rects.physicsBodyType = Phaser.Physics.ARCADE;
+
+            // rect = rects.create(500, 500, null);
+            // rect.body.collideWorldBounds = true;
+            // rect.body.setSize(50, 50, 0, 0);
+
+            // graphics = game.add.graphics(game.world.centerX, game.world.centerY);
+            // graphics.lineStyle(8, 0xffd900);
+            // graphics.drawCircle(0, 0, 300);
+            
+            game.world.setBounds(0, 0, 1024, 768);
+
+            var sprites = game.add.group();
+            sprites.enableBody = true;
+            sprites.physicsBodyType = Phaser.Physics.ARCADE;
+
+            sprite = sprites.create(50, 80, 'logo');
+            sprite.body.collideWorldBounds = true;
+            sprite.x = 512;
+            sprite.y = 384;
+            sprite.anchor.setTo(0.5, 1);
+            sprite.maxHealth = 50;
+            sprite.health = 100;
+
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            game.physics.enable(sprite, Phaser.Physics.ARCADE);
+
+        	wKey = game.input.keyboard.addKey(Phaser.KeyCode.W);
+        	sKey = game.input.keyboard.addKey(Phaser.KeyCode.S);
+        	aKey = game.input.keyboard.addKey(Phaser.KeyCode.A);
+        	dKey = game.input.keyboard.addKey(Phaser.KeyCode.D);
+
+        }
+
+        function update(){
+
+        	sprite.body.velocity.x = 0;
+    		sprite.body.velocity.y = 0;
+
+    		game.world.wrap(sprite, 0, true);
+
+        	if (wKey.isDown){
+		        // console.log('w');
+		        sprite.body.velocity.y = -500;
+                sprite.damage(1);
+                console.log(sprite.health);
+		    }
+		    if (sKey.isDown){
+		        // console.log('s');
+		        sprite.body.velocity.y = 500;
+                sprite.heal(1);
+                console.log(sprite.health);
+		    }
+		    if (aKey.isDown){
+		        // console.log('a');
+		        sprite.body.velocity.x = -500;
+		    }
+		    if (dKey.isDown){
+		        // console.log('d');
+		        sprite.body.velocity.x = 500;
+		    }
+
+            if(sprite.health === 0){
+                $('.play').css('display', 'none');
+                $('.loser').css('display', 'block');
+                $('.intro, .loser').animate({
+                    opacity: 1
+                }, 1000);
+            }
+
+            // if (checkOverlap(sprite, graphics))
+            // {
+            //     game.stage.backgroundColor = "#4488AA";
+            // }
+            // else
+            // {
+            //     game.stage.backgroundColor = "#000000";
+            // }
+
+
+        }
+
+        // function checkOverlap(sprite, graphics) {
+
+        //     var boundsA = sprite.getBounds();
+        //     var boundsB = graphics.getBounds();
+
+        //     return Phaser.Rectangle.intersects(boundsA, boundsB);
+
+        // }
+
+        function render () {
+
+            // game.debug.inputInfo(32, 32);
+            game.debug.spriteInfo(sprite, 32, 32);
+            game.debug.bodyInfo(sprite, 32, 128);
+
+        }
+
+    };
+
+</script>
+</body>
+</html>

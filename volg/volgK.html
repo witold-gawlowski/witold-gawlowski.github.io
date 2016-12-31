@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+	<title>Volg!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<<<<<<< HEAD
+	<script src="phaser/build/phaser.min.js"></script>
+=======
+	<script src="phaser/build/phaser.min.js"></script>  
+    <script src="src/NPC.js"></script>
+>>>>>>> origin/master
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- <button id="view-fullscreen">full</button>
+<button id="cancel-fullscreen">window</button> -->
+<div class="intro">
+    <img src="img/intro.jpg" alt="">
+    <div class="play"><img src="img/play.png" alt=""></div>
+    <h1 class="loser">LOSER!</h1>
+</div>
+
+<script type="text/javascript">
+
+(function () {
+    var viewFullScreen = document.getElementById("view-fullscreen");
+    if (viewFullScreen) {
+        viewFullScreen.addEventListener("click", function () {
+            var docElm = document.documentElement;
+            docElm.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            }
+            else if (docElm.msRequestFullscreen) {
+                docElm.msRequestFullscreen();
+            }
+            else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            }
+            else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            }
+        }, false);
+    }
+
+    var cancelFullScreen = document.getElementById("cancel-fullscreen");
+    if (cancelFullScreen) {
+        cancelFullScreen.addEventListener("click", function () {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        }, false);
+    }
+
+})();
+
+
+
+    window.onload = function() {
+
+        game = new Phaser.Game(1024, 768, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
+
+        function preload () {
+
+            game.stage.backgroundColor = '#262425';
+
+            game.load.image('village', 'img/village.jpg');
+            game.load.image('chata1', 'img/chata1.jpg');
+            game.load.image('chata2', 'img/chata2.jpg');
+            game.load.image('chata3', 'img/chata3.jpg');
+            game.load.image('chata4', 'img/chata4.jpg');
+            game.load.image('studnia', 'img/studnia.jpg');
+            game.load.spritesheet('fire', 'img/fire.png', 50, 50, 2);
+            game.load.spritesheet('npc', 'img/npc.png', 50, 80, 2);
+            game.load.spritesheet('npc2', 'img/npc2.png', 50, 80, 2);
+            game.load.spritesheet('npc3', 'img/npc3.png', 50, 80, 4);
+
+            $('.intro').animate({
+                opacity: 1
+            }, 1000).promise().done(function(){
+                $('.play').on('click touchstart', function(){
+                    $('.intro').animate({
+                        opacity: 0
+                    }, 1000, function(){
+                         $('.intro').css('display', 'none');
+                    });
+                    $('canvas').animate({
+                        opacity: 1 
+                    }, 1000);
+                });
+            });
+
+        }
+
+
+        var sprites1;
+        var sprite1;
+        var sprites2;
+        var sprite2;
+<<<<<<< HEAD
+        var sprites3;
+        var sprite3;
+        var fires;
+        var fire;
+        var stidnias;
+        var studnia;
+        var chata1s;
+        var chata1;
+        var chata2s;
+        var chata2;
+        var chata3s;
+        var chata3;
+        var chata4s;
+        var chata4;
+        var score1 = 0;
+        var scoreText1;
+        var score2 = 0;
+        var scoreText2;
+=======
+        gameWidth = 600;
+        gameHeight = 400;
+        screenWidth = 1024;
+        screenHeight = 768;
+        positionRadius = 50;
+        var speed = 150;
+        var totalShifts = 40;
+        var acceptedRadius = 50;
+        var playerSpeed = 200;
+        var NPCprobability = 0.75;
+        var placeShifts = [];
+        var currentNPCs;
+        var NPCscattering = 150;
+        var currentShape = circle;
+        var aims = [];
+        var NPCarray = []
+        var timer;
+        var scatteringArray = [];
+        var NPChp = [];
+        var pause = true;
+        var sprites;
+        var turn;
+        var score1;
+        var score2;
+
+        // var rect;
+        // var graphics;
+>>>>>>> origin/master
+
+
+        
+        function random(seed) {
+            var x = Math.sin(seed++) * 10000;
+            return x - Math.floor(x);
+        }
+
+
+
+        function updateNPC(NPC){
+            var pos;
+            if(!NPC.dead)
+                pos = currentShape(timer.ms+NPC.shift);
+            else{
+                pos = [];
+                pos[0] = -100;
+                pos[1] = -100;
+            }
+            var seed = NPC.number*100+Math.floor(timer.ms/6000)+1;
+            var aimObject = game.add.sprite(pos[0]+NPCscattering*(random(seed)-0.5), pos[1]+NPCscattering*(random(seed+1)-0.5), 'npc');
+            aimObject.visible = false;
+            var distance = game.physics.arcade.distanceBetween(NPC, aimObject);
+
+            game.physics.arcade.moveToObject(NPC,aimObject , speed*Math.atan(distance/10));
+           
+            aimObject.destroy();
+        }
+
+        function updateScattering(){
+            for(var i=0; i<currentNPCs; i++){
+                scatteringArray[i].x = Math.random()*250;
+                scatteringArray[i].y = Math.random()*250;
+            }
+        }
+
+
+        function makeNPC(posX, posY, formation, shift, spriteName, number){
+            var NPC;
+            NPC = sprites.create(posX, posY, spriteName);
+            NPC.update = formation;
+            NPC.shift = shift;
+            NPC.number = number;
+            game.physics.arcade.enable(NPC);
+            game.physics.enable(NPC, Phaser.Physics.ARCADE);
+            NPC.body.collideWorldBounds = true;
+            NPC.body.bounce.setTo(1, 1);
+            NPC.body.velocity.x = 100;
+            NPC.body.velocity.y = 100;
+            NPC.animations.add('walk', [0, 1], 10, true);
+            NPC.inputEnabled = true;
+            NPC.events.onInputDown.add(NPClistener, this);
+            NPC.dead = false;
+            
+            return NPC;
+        }
+ 
+        function newGame(){
+
+            resetNPCs();
+            var r = game.rnd.integerInRange(0, 3);
+            if(r===0){
+                currentShape = lissajous;
+                NPCscattering = 150;
+            }
+            if(r===1){
+                currentShape = square;
+                NPCscattering = 150;
+            }
+            if(r===2){
+                currentShape = circle;
+                NPCscattering = 150;
+            }
+            if(r===3){
+                currentShape = circle;
+                NPCscattering = 40;
+            }
+            pause = false;
+        }
+
+        function NPClistener(){
+            if(turn===1){
+                score2 ++;
+            }else{
+                score1 ++;
+            }
+            newGame();
+            console.log('npc clicked');
+        }
+        function player1listener(){
+            score2++;
+            newGame();
+            console.log('player1 clicked');
+        }
+        function player2listener(){
+            score1++;
+            newGame();
+            console.log('player2 clicked');
+        }
+
+        function generateShifts(){
+            var smallestDistance = Math.PI*2/totalShifts*1000;
+            for(var i=0; i<totalShifts; i++){
+                placeShifts[i] = smallestDistance*i;
+            }
+        }
+
+        function resetNPCs(){
+
+            for(var i= 0; i<currentNPCs; i++)
+                if(NPCarray[i]!=null)
+                        NPCarray[i].destroy();
+            currentNPCs = 0;
+            
+
+            for (var i = 0; i < totalShifts; i++){
+
+                var r = Math.random();
+                if(r<NPCprobability){
+                    
+                    var randX = (Math.random()-0.5)*screenWidth+screenWidth/2;
+                    var randY = (Math.random()-0.5)*screenHeight+screenHeight/2;
+                    //console.log(randX);
+                    NPCarray[currentNPCs] = makeNPC(randX, randY, currentShape, placeShifts[i], 'npc', currentNPCs);
+                    //console.log(NPCarray[currentNPCs].body.x);
+                    NPCarray[currentNPCs].animations.play('walk');
+                    currentNPCs++;
+                }
+                
+            }
+
+            for (var i = 0; i < currentNPCs; i++){
+                NPChp[i] = 300;
+            }
+        }
+
+        $(".play").on("click",function(){
+            pause = false;
+        }); 
+
+        function create () {
+            
+            score1 = 0;
+            score2 = 0;
+            timer = game.time.create(false);
+            timer.start();
+
+            scoreText1 = game.add.text(32, 32, 'Player 1: 0', { fontSize: '21px', fill: '#fff' });
+            scoreText2 = game.add.text(740, 32, 'Player 2: 0', { fontSize: '21px', fill: '#fff' });
+
+
+<<<<<<< HEAD
+            game.physics.setBoundsToWorld();
+            // game.add.sprite(0, 0, 'village'); 
+=======
+            // graphics = game.add.graphics(game.world.centerX, game.world.centerY);
+            // graphics.lineStyle(8, 0xffd900);
+            // graphics.drawCircle(0, 0, 300);
+            
+            // game.world.setBounds(0.5, 0.5, 800, 600);
+
+
+
+            
+            game.physics.setBoundsToWorld();
+            game.add.sprite(0, 0, 'village');
+>>>>>>> origin/master
+            
+            var studnias = game.add.group();
+            studnias.enableBody = true;
+            studnias.physicsBodyType = Phaser.Physics.ARCADE;
+            studnia = studnias.create(88, 81, 'studnia');
+            studnia.x = 891;
+            studnia.y = 420;
+            studnia.anchor.setTo(0.5, 0.5);
+
+            var chata1s = game.add.group();
+            chata1s.enableBody = true;
+            chata1s.physicsBodyType = Phaser.Physics.ARCADE;
+            chata1 = chata1s.create(220, 275, 'chata1');
+            chata1.x = 1024;
+            chata1.y = 768;
+            chata1.anchor.setTo(1, 1);
+
+            var chata2s = game.add.group();
+            chata2s.enableBody = true;
+            chata2s.physicsBodyType = Phaser.Physics.ARCADE;
+            chata2 = chata2s.create(132, 130, 'chata2');
+            chata2.x = 1024;
+            chata2.y = 0;
+            chata2.anchor.setTo(1, 0);
+
+            var chata3s = game.add.group();
+            chata3s.enableBody = true;
+            chata3s.physicsBodyType = Phaser.Physics.ARCADE;
+            chata3 = chata3s.create(220, 206, 'chata3');
+            chata3.x = 105;
+            chata3.y = 250;
+            chata3.anchor.setTo(0.5, 0.5);
+
+            var chata4s = game.add.group();
+            chata4s.enableBody = true;
+            chata4s.physicsBodyType = Phaser.Physics.ARCADE;
+            chata4 = chata4s.create(202, 214, 'chata4');
+            chata4.x = 0;
+            chata4.y = 750;
+            chata4.anchor.setTo(0, 1);
+
+            var fires = game.add.group();
+            fires.enableBody = true;
+            fires.physicsBodyType = Phaser.Physics.ARCADE;
+            fire = fires.create(50, 50, 'fire');
+            fire.animations.add('fire');
+            fire.animations.play('fire', 5, true);
+            fire.x = 512;
+            fire.y = 384;
+            fire.anchor.setTo(0.5, 0.5);
+
+            sprites = game.add.group();
+            sprites.enableBody = true;
+            sprites.physicsBodyType = Phaser.Physics.ARCADE;
+
+            sprite1 = sprites.create(50, 80, 'npc');
+            sprite1.inputEnabled = true;
+            sprite1.events.onInputDown.add(player1listener, this);
+            
+            sprite1.animations.add('walk');
+            sprite1.animations.play('walk', 5, true);
+            sprite1.body.collideWorldBounds = true;
+<<<<<<< HEAD
+            sprite1.x = 512;
+            sprite1.y = 384;
+            sprite1.anchor.setTo(0.5, 0.5);
+            sprite1.maxHealth = 100;
+=======
+            sprite1.x = (Math.random()-0.5)*screenWidth+screenWidth/2;
+            sprite1.y = (Math.random()-0.5)*screenHeight+screenHeight/2;
+
+            //sprite1.anchor.setTo(0.5, 0.5);
+            sprite1.maxHealth = 50;
+>>>>>>> origin/master
+            sprite1.health = 100;
+
+         
+            sprite2 = sprites.create(50, 80, 'npc');
+            
+            sprite2.events.onInputDown.add(player2listener, this);
+            sprite2.inputEnabled = true;
+            sprite2.animations.add('walk');
+            sprite2.animations.play('walk', 5, true);
+            sprite2.body.collideWorldBounds = true;
+<<<<<<< HEAD
+            sprite2.x = 512;
+            sprite2.y = 384;
+            sprite2.anchor.setTo(0.5, 0.5);
+            sprite2.maxHealth = 100;
+=======
+            sprite2.x = (Math.random()-0.5)*screenWidth+screenWidth/2;
+            sprite2.y = (Math.random()-0.5)*screenHeight+screenHeight/2;
+            //sprite2.anchor.setTo(0.5, 0.5);
+            sprite2.maxHealth = 50;
+>>>>>>> origin/master
+            sprite2.health = 100;
+
+            var sprites3 = game.add.group();
+            sprites3.enableBody = true;
+            sprites3.physicsBodyType = Phaser.Physics.ARCADE;
+
+            sprite3 = sprites3.create(50, 80, 'npc3');
+            sprite3.animations.add('walk');
+            sprite3.animations.play('walk', 5, true);
+            sprite3.body.collideWorldBounds = true;
+            sprite3.x = 300;
+            sprite3.y = 300;
+            sprite3.anchor.setTo(0.5, 0.5);
+            sprite3.maxHealth = 100;
+            sprite3.health = 100;
+
+            game.physics.startSystem(Phaser.Physics.ARCADE);
+            
+            game.physics.enable(sprite1, Phaser.Physics.ARCADE);
+            game.physics.enable(sprite2, Phaser.Physics.ARCADE);
+            game.physics.enable(sprite3, Phaser.Physics.ARCADE);
+
+        	wKey = game.input.keyboard.addKey(Phaser.KeyCode.W);
+        	sKey = game.input.keyboard.addKey(Phaser.KeyCode.S);
+        	aKey = game.input.keyboard.addKey(Phaser.KeyCode.A);
+        	dKey = game.input.keyboard.addKey(Phaser.KeyCode.D);
+<<<<<<< HEAD
+            // qKey = game.input.keyboard.addKey(Phaser.KeyCode.Q);
+            // eKey = game.input.keyboard.addKey(Phaser.KeyCode.E);
+            // cKey = game.input.keyboard.addKey(Phaser.KeyCode.C);
+            // zKey = game.input.keyboard.addKey(Phaser.KeyCode.Z);
+=======
+            pKey = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+>>>>>>> origin/master
+
+            UKey = game.input.keyboard.addKey(Phaser.KeyCode.UP);
+            DKey = game.input.keyboard.addKey(Phaser.KeyCode.DOWN);
+            LKey = game.input.keyboard.addKey(Phaser.KeyCode.LEFT);
+<<<<<<< HEAD
+            RKey = game.input.keyboard.addKey(Phaser.KeyCode.RIGHT);  
+=======
+            RKey = game.input.keyboard.addKey(Phaser.KeyCode.RIGHT);
+            PKey = game.input.keyboard.addKey(Phaser.KeyCode.ENTER);
+
+            generateShifts();
+            resetNPCs();
+>>>>>>> origin/master
+
+            //timer.stop();
+        }
+
+
+
+         function checkPlayerPosition(spr){
+            for(var i=0; i< totalShifts; i++){
+                var pos = {x: currentShape(timer.ms+placeShifts[i])[0], y: currentShape(timer.ms+placeShifts[i])[1]};
+                var distance = (spr.x-pos.x)*(spr.x-pos.x)+(spr.y-pos.y)*(spr.y-pos.y);
+                //console.log(distance);
+                if(distance<positionRadius*positionRadius){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function togglePause() {
+            game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+        }
+
+        function update(){
+
+
+
+            if(pause){
+                
+                 for (var i = 0; i < currentNPCs; i++){
+                    NPCarray[i].body.velocity.x = 0;
+                    NPCarray[i].body.velocity.y = 0;
+                    sprite1.body.velocity.x = 0;
+                    sprite1.body.velocity.y = 0;
+                    sprite2.body.velocity.x = 0;
+                    sprite2.body.velocity.y = 0;
+                 }
+                 return;
+            }
+
+        	sprite1.body.velocity.x = 0;
+    		sprite1.body.velocity.y = 0;
+
+            sprite2.body.velocity.x = 0;
+            sprite2.body.velocity.y = 0;
+
+    		game.world.wrap(sprite1, 0, true);
+            game.world.wrap(sprite2, 0, true);
+
+<<<<<<< HEAD
+            var speed = 300;
+
+        	if (wKey.isDown){
+		        if(aKey.isDown){
+                    sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = -(speed/Math.sqrt(2));
+                } 
+                else if (dKey.isDown){
+                    sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                // else if (qKey.isDown){
+                //     sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+                //     sprite1.body.velocity.x = -(speed/4);
+                // }
+                else {
+                    sprite1.body.velocity.y = -(speed);
+                }
+		    }
+		    else if (sKey.isDown){
+                if(aKey.isDown){
+                    sprite1.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = -(speed/Math.sqrt(2));
+                } 
+                else if (dKey.isDown){
+                    sprite1.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                else {
+                    sprite1.body.velocity.y = (speed);
+                }
+		    }
+		    else if (aKey.isDown){
+                if(wKey.isDown){
+                    sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = -(speed/Math.sqrt(2));
+                } 
+                else if (sKey.isDown){
+                    sprite1.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = -(speed/Math.sqrt(2));
+                }
+                else {
+                    sprite1.body.velocity.x = -(speed);
+                }
+		    }
+		    else if (dKey.isDown){
+                if(wKey.isDown){
+                    sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = (speed/Math.sqrt(2));
+                } 
+                else if (sKey.isDown){
+                    sprite1.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite1.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                else {
+                    sprite1.body.velocity.x = (speed);
+                }
+=======
+            
+            for (var i = 0; i < currentNPCs; i++){
+                if(!checkPlayerPosition(NPCarray[i]))
+                    NPChp[i]--;
+                if(NPChp[i]<0){
+                    //NPCarray[i].dead = true;
+                    //console.log("banished!");
+                }
+            }
+
+
+            if(checkPlayerPosition(sprite1))
+                console.log('in');
+
+             for(var i=0; i< currentNPCs; i++){
+                     updateNPC(NPCarray[i]);
+            }
+
+        	if (wKey.isDown){
+		        // console.log('w');
+		        sprite1.body.velocity.y = -(playerSpeed);
+                // sprite1.damage(1);
+                // console.log(sprite1.health);
+		    }
+		    if (sKey.isDown){
+		        // console.log('s');
+		        sprite1.body.velocity.y = (playerSpeed);
+                // sprite1.heal(1);
+                // console.log(sprite1.health);
+		    }
+		    if (aKey.isDown){
+		        // console.log('a');
+		        sprite1.body.velocity.x = -(playerSpeed);
+		    }
+		    if (dKey.isDown){
+		        // console.log('d');
+		        sprite1.body.velocity.x = (playerSpeed);
+>>>>>>> origin/master
+		    }
+            // else if (qKey.isDown){
+            //     if(wKey.isDown){
+            //         sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+            //         sprite1.body.velocity.x = -(speed/4);
+            //     } 
+            //     else if (aKey.isDown){
+            //         sprite1.body.velocity.y = -(speed/2);
+            //         sprite1.body.velocity.x = -(speed/Math.sqrt(2));
+            //     }
+            //     else {
+            //         sprite1.body.velocity.y = -(speed/Math.sqrt(2));
+            //         sprite1.body.velocity.x = -(speed/Math.sqrt(2));
+            //     }
+            // }
+
+
+
+            if (pKey.isDown){
+                pause = true;
+                turn = 1;
+            }
+
+            if (UKey.isDown){
+                if(LKey.isDown){
+                    sprite2.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = -(speed/Math.sqrt(2));
+                }
+                else if(RKey.isDown){
+                    sprite2.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                else{
+                    sprite2.body.velocity.y = -(speed);
+                }
+            }
+            else if (DKey.isDown){
+                if(LKey.isDown){
+                    sprite2.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = -(speed/Math.sqrt(2));
+                }
+                else if(RKey.isDown){
+                    sprite2.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                else{
+                    sprite2.body.velocity.y = (speed);
+                }
+            }
+            else if (LKey.isDown){
+                if(UKey.isDown){
+                    sprite2.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = -(speed/Math.sqrt(2));
+                }
+                else if(DKey.isDown){
+                    sprite2.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = -(speed/Math.sqrt(2));
+                }
+                else{
+                    sprite2.body.velocity.x = -(speed);
+                }
+            }
+            else if (RKey.isDown){
+                if(UKey.isDown){
+                    sprite2.body.velocity.y = -(speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                else if(DKey.isDown){
+                    sprite2.body.velocity.y = (speed/Math.sqrt(2));
+                    sprite2.body.velocity.x = (speed/Math.sqrt(2));
+                }
+                else{
+                    sprite2.body.velocity.x = (speed);
+                }
+            }
+
+<<<<<<< HEAD
+            game.physics.arcade.collide(sprite1, sprite2, null, null, this);
+=======
+            if (PKey.isDown){
+                turn = 2;
+                pause = true;
+            }
+            sprites.sort('y', Phaser.Group.SORT_ASCENDING);
+            game.physics.arcade.collide(sprite1, sprite2, collisionHandler, null, this);
+>>>>>>> origin/master
+
+            // if(sprite1.health === 0){
+            //     $('.play').css('display', 'none');
+            //     $('.loser').css('display', 'block');
+            //     $('.intro, .loser').animate({
+            //         opacity: 1
+            //     }, 1000);
+            // }
+
+
+        }
+
+        function render () {
+
+             game.debug.inputInfo(32, 32);
+            // game.debug.spriteInfo(sprite2, 32, 32);
+            // game.debug.bodyInfo(sprite2, 32, 128);
+            // game.debug.spriteInfo(sprite1, 32, 256);
+            // game.debug.bodyInfo(sprite1, 32, 384);
+
+        }
+
+    };
+
+</script>
+</body>
+</html>
