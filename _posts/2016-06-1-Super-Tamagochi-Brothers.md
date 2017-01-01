@@ -1,8 +1,8 @@
----
+﻿---
 layout: default
 title: Super Tamagochi Brothers
 category: projects
-note: A game in Unity developed during 48 hours.
+note: A game in Unity developed during 48 hour jam.
 ---
 <iframe width="550" height="330" src="https://www.youtube.com/embed/_keb2_dR5-Q?showinfo=0" frameborder="0"></iframe>
 
