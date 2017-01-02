@@ -10,4 +10,4 @@ Hello,
 I am Witold Gawlowski, welcome to my personal webpage.  
 It includes my portfolio, links to my CV as well as some less formal information.  
 
-I am currently looking for a Job in Game Development. I would prefer working closely with Technical Artists or as an engine, physics or tools programmer.
+[//]: <> (I am currently looking for a Job in Game Development. I would prefer working closely with Technical Artists or as an engine, physics or tools programmer.)
