@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Super Tamagochi Brothers
 category: projects
