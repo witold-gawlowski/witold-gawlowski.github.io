@@ -10,5 +10,5 @@ Developed in LUA.
 
 Features:  
 * Procedural cave generation using Conway's Game of Life algorithm.  
-* Multiple kinds of enemy AI.
+* Multiple kinds of enemy AI.  
 * Classes and inheritance simulation. (Lua does not have native support for them).  
