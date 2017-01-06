@@ -2,7 +2,7 @@
 layout: default
 title: Heart of the Mountain
 category: projects
-note: A minmalistic action/adventure game in LUA.
+note: A minimalistic action/adventure game in LUA.
 weight: 1350
 ---
 <iframe width="550" height="330" src="https://www.youtube.com/embed/bfxP7Ouw6OQ" frameborder="0"></iframe>  
