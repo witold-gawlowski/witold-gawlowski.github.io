@@ -2,7 +2,7 @@
 layout: default
 title: The Architects
 category: projects
-note: Puzzle game about digging dungeons. Written in Unity.
+note: Puzzle game about digging dungeons. Written in Unity, C#.
 weight: 1400
 ---
 <iframe width="550" height="330" src="https://www.youtube.com/embed/s_ui5Jt301o" frameborder="0"></iframe>  
