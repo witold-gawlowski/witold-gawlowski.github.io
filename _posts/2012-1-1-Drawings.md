@@ -1,7 +1,9 @@
 ---
 layout: default
-title: Drawings
+title: My Drawings
 category: projects
+weight: 200
+
 ---
 <iframe src="https://albumizr.com/a/BqE" scrolling="no" frameborder="0" allowfullscreen width="550" height="400"></iframe>
 

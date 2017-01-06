@@ -3,8 +3,9 @@ layout: default
 title: Projects
 ---
 <table id="project-list">
-{% for post in site.posts %}
- {% if post.category == 'projects' %}
+{% assign sorted_pages = site.posts | sort:"weight" %}
+{% for post in sorted_pages reversed %}
+ {% if post.category == 'projects' and post.weight > 200 %}
  <tr>
  <td>
   <a href="{{ post.url }}">
