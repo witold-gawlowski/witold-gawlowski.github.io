@@ -1,6 +1,6 @@
 ---
 layout: default
-title: My Drawings
+title: Drawings
 category: projects
 weight: 200
 
