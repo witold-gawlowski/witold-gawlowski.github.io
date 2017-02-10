@@ -16,6 +16,6 @@ and me.
 
 I was a technical lead in this project. I have also implemented dynamic water mesh. Currently the project is in process of further development and we plan to release it on the Steam platform.  
 
-[You may download and play the game jam version of the game here:](http://globalgamejam.org/2017/games/storm)http://globalgamejam.org/2017/games/storm)  
+You may download and play the game jam version of the game [here](http://globalgamejam.org/2017/games/storm).
 
-[Have a look at our github here:](https://github.com/MatthewDuddington/GGJ_2017)
+Have a look at our github [here](https://github.com/MatthewDuddington/GGJ_2017).
