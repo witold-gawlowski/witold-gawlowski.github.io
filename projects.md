@@ -5,7 +5,7 @@ title: Projects
 <table id="project-list">
 {% assign sorted_pages = site.posts | sort:"weight" %}
 {% for post in sorted_pages reversed %}
- {% if post.category == 'projects' and post.weight > 0 %}
+ {% if post.categories contains 'projects' and post.weight > 0 %}
  <tr>
  <td>
   <a href="{{ post.url }}">
