@@ -5,7 +5,7 @@ category: projects
 note: Global Game Jam, Unity 3D
 weight: 5000
 ---
-<iframe width="854" height="480" src="https://www.youtube.com/embed/Nblo7VLYo1U" frameborder="0" allowfullscreen></iframe>
+<iframe width="854" height="480" src="https://www.youtube.com/embed/Cip-MqJQhYY" frameborder="0" allowfullscreen></iframe>
 
 King of the hill game, developed over 48 hours by a team of 5 people:  
 * Robert Doig,  
